@@ -1,0 +1,16 @@
+{
+  "name": "live-container-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "NODE_ENV=dev node esbuild.config.js",
+    "build": "NODE_ENV=production node esbuild.config.js",
+    "flow": "NODE_ENV=flow node esbuild.config.js"
+  },
+  "keywords": [],
+  "dependencies": {
+    "esbuild": "^0.15.15"
+  }
+}
