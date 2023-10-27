@@ -1,96 +1,40 @@
-import { serve, build } from "esbuild";
-// import { glsl } from "esbuild-plugin-glsl";
+import * as esbuild from "esbuild";
 
 /* - Setup */
 const env = process.env.NODE_ENV;
 const production = env === "production";
 
-const FILES = {
-  entry: ["index.js"],
-  out: "build/js",
-};
-
-const SETTINGS = {
-  bundle: true,
-  sourcemap: !production,
-  loader: { ".png": "dataurl" },
-  loader: { ".webp": "dataurl" },
+const CONFIG = {
+  PORT: 8000,
+  ENTRY: ["index.js"],
+  SERVE_DIR: "dist",
+  OUT_DIR: "dist",
+  BUILD_DIR: "build",
 };
 
 /* -- Plugins */
-const PLUGINS = [
-  //   glsl({
-  //     minify: production,
-  //   }),
-];
-   
-/* --- DEVELOPMENT */
-function serveDev() {
-  serve(
-    {
-      port: 8000,
-      servedir: "dist",
-    },
-    {
-      entryPoints: FILES.entry,
-      outdir: "dist",
-      ...SETTINGS,
-      plugins: PLUGINS,
-    }
-  ).then((server) => {
-    console.log(`↑DEV ↑`);
-    console.log("http://localhost:8000/dev.js");
-    //   server.stop();
-  });
-}
+const plugins = [];
 
-/* --- DEVELOPMENT */
-function serveFile() {
-  serve(
-    {
-      port: 8000,
-    },
-    {
-      entryPoints: FILES.entry,
-      outfile: "dev.js",
-      ...SETTINGS,
-      plugins: PLUGINS,
-    }
-  ).then((server) => {
-    console.log("http://localhost:8000/dev.js");
-    //   server.stop();
-  });
-}
+// const loader = {};
 
-/* --- BUILD */
-function buildJs() {
-  build({
-    entryPoints: FILES.entry,
-    outdir: FILES.out,
-    ...SETTINGS,
-    plugins: PLUGINS,
-  }).then((stats) => {
-    console.log(stats);
-  });
-}
+const ctx = await esbuild.context({
+  bundle: true,
+  entryPoints: CONFIG.ENTRY,
+  outdir: production ? CONFIG.BUILD_DIR : CONFIG.OUT_DIR,
+  minify: production,
+  sourcemap: !production,
+  target: production ? "es2019" : "esnext",
+  plugins,
+  // loader,
+});
 
-/* ------ Run! */
 if (production) {
-  buildJs();
-} else if (env === "flow") {
-  serveFile();
+  await ctx.rebuild();
+  ctx.dispose();
 } else {
-  serveDev();
+  await ctx.watch();
+  await ctx.serve({
+    servedir: CONFIG.SERVE_DIR,
+    port: CONFIG.PORT,
+  });
 }
-
-/*
-.package.json 
-
-  "type": "module",
-  "scripts": {
-    "dev": "NODE_ENV=dev node esbuild.config.js",
-    "build": "NODE_ENV=production node esbuild.config.js",
-    "flow": "NODE_ENV=flow node esbuild.config.js"
-  },
-  
-*/

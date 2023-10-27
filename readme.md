@@ -2,25 +2,33 @@
 # How To
 
 ## Run the scripts
-This thing is using pnpm.
+This thing uses pnpm.
 
-From the terminal to the side (create a new one if doesn't exist). 
-Make sure other terminals are not runing.
+From the terminal to the side (create a new one if doesn't exist), you'll be able to run scripts, install dependency, and build everything into a single script.
+
+Before doing everything else, when stasrting a new project, run `pnpm install`.
 
 To run the **dev server** you can run `pnpm dev`.
 To run the **build** you can run `pnpm build`.
 
-From the new tasks, you can alternatively start a **dev** or **build** task.
+(From the new tasks, you can alternatively start a **dev** or **build** task.)
 
-Assuming you're using the file structure correctly, you should import and run things from the `index.js` file at the root of the poroject.
+Assuming you're using the file structure correctly, you should import and run things from the `index.js` file at the root of the project.
 
+When Running `pnpm dev` a page containint your files will open to the right.
+As default, it should have both an `index.js` and an `index.js.map`. If you click on the file you want (the .js one),
+in the top bar you'll have a *URL* you'll be able to paste inside a `<script>` tag in your webflow project.
 
-This means the terminal, when running, is going to give a link that looks something like this: `https://localhost:5173`.
-If you click on it, you'll get to an empty webpage. Add `/index.js` to the webpage you see, and you shuld see your script.
-Copy and paste it as the `src` parameter of a script tag.
+To make sure everything runs correctly and as smooth as possible
 
 ```html
-<script defer src="{YOUR WEB PAGE ADDRESS}"></script>
+<!-- This is the basic version-->
+<!-- in /body-->
+<script src="{THE URL FROM THE TOP BAR}"></script>
+
+<!-- This is the SUGGESTED version-->
+<!-- in /head-->
+<script defer src="{THE URL FROM THE TOP BAR}"></script>
 ```
 
 ## Install dependencies
@@ -28,12 +36,13 @@ Copy and paste it as the `src` parameter of a script tag.
 Use [NPMJS](https://www.npmjs.com/) to find the name of what you want to install. Once you have the name.
 
 Open a terminal instance on the side. 
-If you already have a terminal running kill the current process using `ctrl+c`
+If you already have a terminal running kill the current process using `ctrl + c`
 
 Type `pnpm i` + the *name* of the package. *(ie `pnpm i gsap`)*
 
 On the npm page look for the instruction on how to import (specifically if it has `{}` or not).
 Import the dependency only in the file (or files) you need it in.
+
 ```js
 import gsap from 'gsap
 ```

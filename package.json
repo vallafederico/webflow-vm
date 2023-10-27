@@ -11,6 +11,6 @@
   },
   "keywords": [],
   "dependencies": {
-    "esbuild": "^0.15.15"
+    "esbuild": "^0.19.5"
   }
 }

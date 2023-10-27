@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/utils.js", "../index.js"],
+  "sourcesContent": ["export function runUtils() {\n  console.log(\"utils\");\n}\n\nexport function somethingElse() {\n  console.log(\"something\");\n}\n", "import { runUtils } from \"./src/utils.js\"; // import from file\n\nrunUtils(); // run imported functions\n"],
+  "mappings": ";;AAAO,WAAS,WAAW;AACzB,YAAQ,IAAI,OAAO;AAAA,EACrB;;;ACAA,WAAS;",
+  "names": []
+}
