@@ -78,3 +78,7 @@ export function something() {}
 import {someting} from '../something.js' // this pulls from the enclosing folder
 
 ```
+
+----
+
+[CS Link](https://codesandbox.io/p/github/vallafederico/webflow-vm/main?file=%2Findex.js%3A4%2C1&workspaceId=1cdb5fa5-f58c-4a59-9991-f24cb15e628c)
